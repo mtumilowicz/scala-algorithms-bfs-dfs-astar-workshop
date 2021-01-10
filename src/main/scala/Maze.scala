@@ -56,4 +56,10 @@ case class Maze(
     if (ml.column - 1 >= 0 && (grid(ml.row)(ml.column - 1) != Blocked())) locations.addOne(MazeLocation(ml.row, ml.column - 1))
     locations.toList
   }
+
+  def manhattanDistance(ml: MazeLocation): Double = {
+    val xdist = Math.abs(ml.column - goal.column)
+    val ydist = Math.abs(ml.row - goal.row)
+    xdist + ydist
+  }
 }

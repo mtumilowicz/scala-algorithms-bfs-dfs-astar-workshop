@@ -38,4 +38,33 @@ object Algo {
     }
     null
   }
+
+  def astar[T](heuristic: T => Double)(
+               initial: T,
+               goalTest: T => Boolean,
+               successors: T => List[T]
+               ): Node[T] = {
+    val frontier = mutable.PriorityQueue[Node[T]]()
+    frontier.enqueue(new Node[T](initial, null, 0.0, heuristic(initial)))
+    // explored is where we've been
+    val explored = mutable.Map[T, Double]()
+    explored.put(initial, 0.0)
+    // keep going while there is more to explore
+    while (frontier.nonEmpty) {
+      val currentNode = frontier.dequeue()
+      val currentState = currentNode.state
+      // if we found the goal, we're done
+      if (goalTest(currentState)) return currentNode
+      // check where we can go next and haven't explored
+      for (child <- successors(currentState)) { // 1 here assumes a grid, need a cost function for more
+        val newCost = currentNode.cost + 1
+        if (!explored.contains(child) || explored(child) > newCost) {
+          explored.put(child, newCost)
+          frontier.enqueue(Node(child, currentNode, newCost, heuristic(child)))
+        }
+      }
+    }
+    null // went through everything and never found goal
+
+  }
 }

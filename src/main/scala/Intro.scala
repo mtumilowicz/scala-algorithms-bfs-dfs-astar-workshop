@@ -1,12 +1,19 @@
 object Intro extends App {
-  run(Algo.dfs)
+
+  val m = new Maze()
+  run(m, Algo.dfs)
 
   println("--------------------------------------")
 
-  run(Algo.bfs)
+  val m2 = new Maze()
+  run(m2, Algo.bfs)
 
-  def run(algo: (MazeLocation, MazeLocation => Boolean, MazeLocation => List[MazeLocation]) => Node[MazeLocation]): Unit = {
-    val m = new Maze()
+  println("--------------------------------------")
+
+  val m3 = new Maze()
+  run(m3, Algo.astar(m3.manhattanDistance))
+
+  def run(m: Maze, algo: (MazeLocation, MazeLocation => Boolean, MazeLocation => List[MazeLocation]) => Node[MazeLocation]): Unit = {
     println(m.show())
     val solution1 = algo(m.start, m.goalTest, m.successors)
     if (solution1 == null) System.out.println("No solution found using depth-first search!")
