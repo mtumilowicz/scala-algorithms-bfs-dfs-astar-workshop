@@ -1,3 +1,5 @@
+package maze
+
 import scala.collection.mutable.ListBuffer
 
 case class Maze(

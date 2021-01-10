@@ -1,3 +1,7 @@
+package maze
+
+import algo.Algo
+
 object Intro extends App {
 
   val m = new Maze()

@@ -1,3 +1,5 @@
+package maze
+
 sealed class Cell(val code: String) {
   def show(): String = code
 }

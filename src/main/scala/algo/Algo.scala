@@ -1,3 +1,7 @@
+package algo
+
+import maze.Node
+
 import scala.collection.mutable
 
 object Algo {
@@ -40,10 +44,10 @@ object Algo {
   }
 
   def astar[T](heuristic: T => Double)(
-               initial: T,
-               goalTest: T => Boolean,
-               successors: T => List[T]
-               ): Node[T] = {
+    initial: T,
+    goalTest: T => Boolean,
+    successors: T => List[T]
+  ): Node[T] = {
     val frontier = mutable.PriorityQueue[Node[T]]()
     frontier.enqueue(new Node[T](initial, null, 0.0, heuristic(initial)))
     // explored is where we've been
