@@ -1,21 +1,21 @@
 package maze
 
-import algo.Algo
+import algorithms.Algorithms
 
 object Intro extends App {
 
   val m = new Maze()
-  run(m, Algo.dfs)
+  run(m, Algorithms.dfs)
 
   println("--------------------------------------")
 
   val m2 = new Maze()
-  run(m2, Algo.bfs)
+  run(m2, Algorithms.bfs)
 
   println("--------------------------------------")
 
   val m3 = new Maze()
-  run(m3, Algo.astar(m3.manhattanDistance))
+  run(m3, Algorithms.astar(m3.manhattanDistance))
 
   def run(m: Maze, algo: (MazeLocation, MazeLocation => Boolean, MazeLocation => List[MazeLocation]) => Node[MazeLocation]): Unit = {
     println(m.show())
