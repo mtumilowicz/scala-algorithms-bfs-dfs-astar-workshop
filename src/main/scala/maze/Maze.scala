@@ -12,10 +12,6 @@ case class Maze(
 
   val grid: Array[Array[Cell]] = generateRandomGrid(0.2)
 
-  def this() {
-    this(10, 10, MazeLocation(0, 0), MazeLocation(9, 9), 0.2)
-  }
-
   private def generateRandomGrid(sparseness: Double): Array[Array[Cell]] = {
     val r = scala.util.Random
     val grid: Array[Array[Cell]] = Array.fill(rows, columns)(Cell.Empty())
@@ -63,5 +59,17 @@ case class Maze(
     val xdist = Math.abs(ml.column - goal.column)
     val ydist = Math.abs(ml.row - goal.row)
     xdist + ydist
+  }
+}
+
+object Maze {
+  def apply(): Maze = {
+    Maze(
+      rows = 10,
+      columns = 10,
+      start = MazeLocation(0, 0),
+      goal = MazeLocation(9, 9),
+      sparseness = 0.2
+    )
   }
 }

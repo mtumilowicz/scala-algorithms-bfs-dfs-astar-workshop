@@ -4,17 +4,17 @@ import algorithms.Algorithms
 
 object Intro extends App {
 
-  val m = new Maze()
+  val m = Maze()
   run(m, Algorithms.dfs)
 
   println("--------------------------------------")
 
-  val m2 = new Maze()
+  val m2 = Maze()
   run(m2, Algorithms.bfs)
 
   println("--------------------------------------")
 
-  val m3 = new Maze()
+  val m3 = Maze()
   run(m3, Algorithms.astar(m3.manhattanDistance))
 
   def run(m: Maze, algo: (MazeLocation, MazeLocation => Boolean, MazeLocation => List[MazeLocation]) => Node[MazeLocation]): Unit = {
