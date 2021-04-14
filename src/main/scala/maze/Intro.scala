@@ -15,7 +15,7 @@ object Intro extends App {
   println("--------------------------------------")
 
   val m3 = Maze()
-  run(m3, Algorithms.astar(m3.manhattanDistance))
+  run(m3, Algorithms.astar(x => manhattanDistance(x, m3.goal)))
 
   def run(m: Maze, algo: (Location, Location => Boolean, Location => List[Location]) => Node[Location]): Unit = {
     println(m.show())
@@ -26,6 +26,12 @@ object Intro extends App {
       m.mark(path1)
       println(m.show())
     }
+  }
+
+  def manhattanDistance(ml: Location, goal: Location): Double = {
+    val xdist = Math.abs(ml.column - goal.column)
+    val ydist = Math.abs(ml.row - goal.row)
+    xdist + ydist
   }
 
 }

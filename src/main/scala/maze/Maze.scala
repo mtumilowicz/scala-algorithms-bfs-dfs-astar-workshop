@@ -24,17 +24,18 @@ case class Maze(
 
   def successors(ml: Location): List[Location] = {
     val locations = ListBuffer[Location]()
-    if (ml.row + 1 < rows && (grid(ml.row + 1)(ml.column) != Cell.Blocked())) locations.addOne(Location(ml.row + 1, ml.column))
-    if (ml.row - 1 >= 0 && (grid(ml.row - 1)(ml.column) != Cell.Blocked())) locations.addOne(Location(ml.row - 1, ml.column))
-    if (ml.column + 1 < cols && (grid(ml.row)(ml.column + 1) != Cell.Blocked())) locations.addOne(Location(ml.row, ml.column + 1))
-    if (ml.column - 1 >= 0 && (grid(ml.row)(ml.column - 1) != Cell.Blocked())) locations.addOne(Location(ml.row, ml.column - 1))
+    if (ml.row + 1 < rows && (grid(ml.row + 1)(ml.column) != Cell.Blocked()))
+      locations += Location(ml.row + 1, ml.column)
+    if (ml.row - 1 >= 0 && (grid(ml.row - 1)(ml.column) != Cell.Blocked())) {
+      locations += Location(ml.row - 1, ml.column)
+    }
+    if (ml.column + 1 < cols && (grid(ml.row)(ml.column + 1) != Cell.Blocked())) {
+      locations += Location(ml.row, ml.column + 1)
+    }
+    if (ml.column - 1 >= 0 && (grid(ml.row)(ml.column - 1) != Cell.Blocked())) {
+      locations += Location(ml.row, ml.column - 1)
+    }
     locations.toList
-  }
-
-  def manhattanDistance(ml: Location): Double = {
-    val xdist = Math.abs(ml.column - goal.column)
-    val ydist = Math.abs(ml.row - goal.row)
-    xdist + ydist
   }
 }
 
