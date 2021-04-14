@@ -25,6 +25,7 @@ case class Maze(
 
   def show(): String = {
     val sb = new StringBuilder()
+
     for (row <- grid) {
       for (cell <- row) {
         sb.append(cell.show())
@@ -36,15 +37,12 @@ case class Maze(
   }
 
   def mark(path: List[Location]): Unit = {
-    for (ml <- path) {
-      grid(ml.row)(ml.column) = Cell.Path()
-    }
-
+    path.foreach { step => grid(step.row)(step.column) = Cell.Path() }
     grid(start.row)(start.column) = Cell.Start()
     grid(goal.row)(goal.column) = Cell.Goal()
   }
 
-  def goalTest(ml: Location): Boolean = goal.equals(ml)
+  def goalTest(ml: Location): Boolean = goal == ml
 
   def successors(ml: Location): List[Location] = {
     val locations = ListBuffer[Location]()
