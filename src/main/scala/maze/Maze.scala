@@ -3,38 +3,16 @@ package maze
 import scala.collection.mutable.ListBuffer
 
 case class Maze(
-                 rows: Int,
-                 columns: Int,
+                 grid: Array[Array[Cell]],
                  start: Location,
                  goal: Location,
-                 sparseness: Double
                ) {
 
-  val grid: Array[Array[Cell]] = generateRandomGrid(0.2)
+  val rows: Int = grid.length
+  val cols: Int = grid(0).length
 
-  private def generateRandomGrid(sparseness: Double): Array[Array[Cell]] = {
-    val r = scala.util.Random
-    val grid: Array[Array[Cell]] = Array.fill(rows, columns)(Cell.Empty())
-    for (
-      row <- 0 until rows;
-      col <- 0 until columns
-    ) if (r.nextDouble() < sparseness) grid(row)(col) = Cell.Blocked()
-
-    grid
-  }
-
-  def show(): String = {
-    val sb = new StringBuilder()
-
-    for (row <- grid) {
-      for (cell <- row) {
-        sb.append(cell.show())
-      }
-      sb.append(System.lineSeparator)
-    }
-
-    sb.toString()
-  }
+  def show(): String =
+    grid.map(_.map(_.show()).mkString).mkString(System.lineSeparator)
 
   def mark(path: List[Location]): Unit = {
     path.foreach { step => grid(step.row)(step.column) = Cell.Path() }
@@ -48,7 +26,7 @@ case class Maze(
     val locations = ListBuffer[Location]()
     if (ml.row + 1 < rows && (grid(ml.row + 1)(ml.column) != Cell.Blocked())) locations.addOne(Location(ml.row + 1, ml.column))
     if (ml.row - 1 >= 0 && (grid(ml.row - 1)(ml.column) != Cell.Blocked())) locations.addOne(Location(ml.row - 1, ml.column))
-    if (ml.column + 1 < columns && (grid(ml.row)(ml.column + 1) != Cell.Blocked())) locations.addOne(Location(ml.row, ml.column + 1))
+    if (ml.column + 1 < cols && (grid(ml.row)(ml.column + 1) != Cell.Blocked())) locations.addOne(Location(ml.row, ml.column + 1))
     if (ml.column - 1 >= 0 && (grid(ml.row)(ml.column - 1) != Cell.Blocked())) locations.addOne(Location(ml.row, ml.column - 1))
     locations.toList
   }
@@ -63,11 +41,20 @@ case class Maze(
 object Maze {
   def apply(): Maze = {
     Maze(
-      rows = 10,
-      columns = 10,
+      generateRandomGrid(10, 10, 0.2),
       start = Location(0, 0),
       goal = Location(9, 9),
-      sparseness = 0.2
     )
+  }
+
+  private def generateRandomGrid(rows: Int, cols: Int, sparseness: Double): Array[Array[Cell]] = {
+    val r = scala.util.Random
+    val grid: Array[Array[Cell]] = Array.fill(rows, cols)(Cell.Empty())
+    for (
+      row <- 0 until rows;
+      col <- 0 until cols
+    ) if (r.nextDouble() < sparseness) grid(row)(col) = Cell.Blocked()
+
+    grid
   }
 }
