@@ -17,7 +17,7 @@ object Intro extends App {
   val m3 = Maze()
   run(m3, Algorithms.astar(m3.manhattanDistance))
 
-  def run(m: Maze, algo: (MazeLocation, MazeLocation => Boolean, MazeLocation => List[MazeLocation]) => Node[MazeLocation]): Unit = {
+  def run(m: Maze, algo: (Location, Location => Boolean, Location => List[Location]) => Node[Location]): Unit = {
     println(m.show())
     val solution1 = algo(m.start, m.goalTest, m.successors)
     if (solution1 == null) System.out.println("No solution found using depth-first search!")
