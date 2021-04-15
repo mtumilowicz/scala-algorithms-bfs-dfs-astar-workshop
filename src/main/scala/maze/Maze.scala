@@ -27,8 +27,10 @@ case class Maze(
     grid(goal.row)(goal.column) = Cell.Goal()
   }
 
-  def show(): String =
-    grid.map(_.map(_.show()).mkString).mkString(System.lineSeparator)
+  def show(): String = {
+    val prepareRows = grid.map(_.map(_.show()).mkString)
+    prepareRows.mkString(System.lineSeparator)
+  }
 
   private def isInRange(coordinates: (Int, Int)): Boolean = {
     val (row, col) = coordinates
