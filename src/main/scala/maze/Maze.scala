@@ -1,7 +1,5 @@
 package maze
 
-import scala.collection.mutable.ListBuffer
-
 case class Maze(
                  grid: Array[Array[Cell]],
                  start: Location,
@@ -10,10 +8,18 @@ case class Maze(
 
   val rows: Int = grid.length
   val cols: Int = grid(0).length
-  val directions = Array((1, 0), (-1, 0), (0, 1), (0, -1))
+  val directions = List((1, 0), (-1, 0), (0, 1), (0, -1))
 
-  def show(): String =
-    grid.map(_.map(_.show()).mkString).mkString(System.lineSeparator)
+  def goalTest(ml: Location): Boolean = goal == ml
+
+  def successors(ml: Location): List[Location] = {
+    val (row, col) = (ml.row, ml.column)
+    directions
+      .map { case (rowDirection, colDirection) => (row + rowDirection, col + colDirection) }
+      .filter(isInRange)
+      .filter { case (newR, newC) => grid(newR)(newC) != Cell.Blocked() }
+      .map { case (newR, newC) => Location(newR, newC) }
+  }
 
   def mark(path: List[Location]): Unit = {
     path.foreach { step => grid(step.row)(step.column) = Cell.Path() }
@@ -21,23 +27,12 @@ case class Maze(
     grid(goal.row)(goal.column) = Cell.Goal()
   }
 
-  def goalTest(ml: Location): Boolean = goal == ml
+  def show(): String =
+    grid.map(_.map(_.show()).mkString).mkString(System.lineSeparator)
 
-  def successors(ml: Location): List[Location] = {
-    val locations = ListBuffer[Location]()
-    val (row, col) = (ml.row, ml.column)
-    if (row + 1 < rows && (grid(row + 1)(col) != Cell.Blocked()))
-      locations += Location(row + 1, col)
-    if (row - 1 >= 0 && (grid(row - 1)(col) != Cell.Blocked())) {
-      locations += Location(row - 1, col)
-    }
-    if (col + 1 < cols && (grid(row)(col + 1) != Cell.Blocked())) {
-      locations += Location(ml.row, ml.column + 1)
-    }
-    if (col - 1 >= 0 && (grid(row)(col - 1) != Cell.Blocked())) {
-      locations += Location(row, col - 1)
-    }
-    locations.toList
+  private def isInRange(coordinates: (Int, Int)): Boolean = {
+    val (row, col) = coordinates
+    0 <= row && row < rows && 0 <= col && col < cols
   }
 }
 
