@@ -4,18 +4,18 @@ import algorithms.Algorithms
 
 object Intro extends App {
 
-  val m = Maze()
+  val m = Maze(xxx2, Location(0, 0), Location(9, 9))
   run(m, Algorithms.dfs)
 
   println("--------------------------------------")
 
-  val m2 = Maze()
+  val m2 = Maze(xxx2, Location(0, 0), Location(9, 9))
   run(m2, Algorithms.bfs)
 
   println("--------------------------------------")
 
-  val m3 = Maze()
-  run(m3, Algorithms.astar(x => manhattanDistance(x, m3.goal)))
+  val m3 = Maze(xxx2, Location(0, 0), Location(9, 9))
+  run(m3, Algorithms.astar(x => manhattanDistance(x, m.goal)))
 
   def run(m: Maze, algo: (Location, Location => Boolean, Location => List[Location]) => Node[Location]): Unit = {
     println(m.show())
@@ -26,6 +26,40 @@ object Intro extends App {
       m.mark(path1)
       println(m.show())
     }
+  }
+
+  def xxx: Array[Array[Cell]] = {
+    val lab =
+        "S, , , ,X,X,X,X,X,X," +
+        "X,X,X, ,X,X,X,X,X,X," +
+        "X,X,X, ,X,X,X,X,X,X," +
+        " , , , ,X,X,X,X,X,X," +
+        " ,X,X,X,X,X,X,X,X,X," +
+        " ,X,X,X,X,X,X,X,X,X," +
+        " ,X,X,X,X,X,X,X,X,X," +
+        " , , , , ,X,X,X,X,X," +
+        "X,X,X,X, , , , , , ," +
+        "X,X,X,X,X,X,G, , , ,"
+
+    val all = lab.split(",").map(Cell.from).filter(_ != null)
+    all.grouped(10).toArray
+  }
+
+  def xxx2: Array[Array[Cell]] = {
+    val lab =
+        "S, , , , , , , , , ," +
+        " ,X,X,X,X,X,X,X,X, ," +
+        " ,X,X,X,X,X,X,X,X, ," +
+        " ,X,X,X,X,X,X,X,X, ," +
+        " ,X,X,X,X,X,X,X,X, ," +
+        " ,X,X,X,X,X,X,X,X, ," +
+        " ,X,X,X,X,X,X,X,X, ," +
+        " ,X,X,X,X,X,X,X,X, ," +
+        " ,X,X,X,X,X,X,X,X, ," +
+        " , , , , , , , , ,G,"
+
+    val all = lab.split(",").map(Cell.from).filter(_ != null)
+    all.grouped(10).toArray
   }
 
   def manhattanDistance(ml: Location, goal: Location): Double = {
