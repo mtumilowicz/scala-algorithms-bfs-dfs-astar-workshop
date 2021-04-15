@@ -10,6 +10,7 @@ case class Maze(
 
   val rows: Int = grid.length
   val cols: Int = grid(0).length
+  val directions = Array((1, 0), (-1, 0), (0, 1), (0, -1))
 
   def show(): String =
     grid.map(_.map(_.show()).mkString).mkString(System.lineSeparator)
@@ -24,16 +25,17 @@ case class Maze(
 
   def successors(ml: Location): List[Location] = {
     val locations = ListBuffer[Location]()
-    if (ml.row + 1 < rows && (grid(ml.row + 1)(ml.column) != Cell.Blocked()))
-      locations += Location(ml.row + 1, ml.column)
-    if (ml.row - 1 >= 0 && (grid(ml.row - 1)(ml.column) != Cell.Blocked())) {
-      locations += Location(ml.row - 1, ml.column)
+    val (row, col) = (ml.row, ml.column)
+    if (row + 1 < rows && (grid(row + 1)(col) != Cell.Blocked()))
+      locations += Location(row + 1, col)
+    if (row - 1 >= 0 && (grid(row - 1)(col) != Cell.Blocked())) {
+      locations += Location(row - 1, col)
     }
-    if (ml.column + 1 < cols && (grid(ml.row)(ml.column + 1) != Cell.Blocked())) {
+    if (col + 1 < cols && (grid(row)(col + 1) != Cell.Blocked())) {
       locations += Location(ml.row, ml.column + 1)
     }
-    if (ml.column - 1 >= 0 && (grid(ml.row)(ml.column - 1) != Cell.Blocked())) {
-      locations += Location(ml.row, ml.column - 1)
+    if (col - 1 >= 0 && (grid(row)(col - 1) != Cell.Blocked())) {
+      locations += Location(row, col - 1)
     }
     locations.toList
   }
