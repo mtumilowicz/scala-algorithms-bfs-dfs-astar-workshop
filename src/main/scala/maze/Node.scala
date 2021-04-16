@@ -1,28 +1,21 @@
 package maze
 
-import scala.collection.mutable.ListBuffer
+import scala.annotation.tailrec
 
 case class Node[T](
                     state: T,
-                    parent: Node[T] = null,
-                    cost: Double = 0.0,
-                    heuristic: Double = 0.0
-                  ) extends Comparable[Node[T]] {
-  override def compareTo(other: Node[T]): Int = {
-    val mine = cost + heuristic
-    val theirs = other.cost + other.heuristic
-    mine.compareTo(theirs)
-  }
+                    parent: Option[Node[T]] = Option.empty) {
 
-  def toPath(): List[T] = {
-    val path = ListBuffer[T]()
-    path.addOne(state)
-    var node = this
-    while (node.parent != null) {
-      node = node.parent
-      path.addOne(node.state)
+  def toPath: List[T] = {
+    @tailrec
+    def inner(current: Node[T] = this, acc: List[T] = List()): List[T] = {
+      if (current == null) return acc
+      current match {
+        case Node(state, None) => state :: acc
+        case Node(state, Some(parent)) => inner(parent, state :: acc)
+      }
     }
 
-    path.reverse.toList
+    inner()
   }
 }

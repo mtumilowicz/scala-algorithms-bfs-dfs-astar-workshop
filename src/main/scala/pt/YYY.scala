@@ -10,7 +10,7 @@ object YYY extends App {
   val solution = Algorithms.bfs(start, start.goalTest, start.successors)
   if (solution == null) System.out.println("No solution found!")
   else {
-    val path = solution.toPath()
+    val path = solution.toPath
     PtState.displaySolution(path)
   }
 

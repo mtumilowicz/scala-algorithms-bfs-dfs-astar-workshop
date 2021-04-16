@@ -1,6 +1,6 @@
 package algorithms
 
-import maze.Node
+import maze.{AStarNode, Node}
 
 import scala.collection.mutable
 
@@ -19,7 +19,7 @@ object Algorithms {
         .filter(!explored.contains(_))
         .foreach(child => {
           explored add child
-          frontier push Node(child, currentNode)
+          frontier push Node(child, Some(currentNode))
         })
     }
     null
@@ -39,16 +39,16 @@ object Algorithms {
         .filter(!explored.contains(_))
         .foreach(child => {
           explored add child
-          frontier enqueue Node(child, currentNode)
+          frontier enqueue Node(child, Some(currentNode))
         })
     }
     null
   }
 
   def astar[T](heuristic: T => Double)
-              (initial: T, goalTest: T => Boolean, successors: T => List[T]): Node[T] = {
-    val frontier = mutable.PriorityQueue[Node[T]]()
-    frontier.enqueue(new Node[T](initial, null, 0.0, heuristic(initial)))
+              (initial: T, goalTest: T => Boolean, successors: T => List[T]): AStarNode[T] = {
+    val frontier = mutable.PriorityQueue[AStarNode[T]]()
+    frontier.enqueue(AStarNode[T](initial, null, 0.0, heuristic(initial)))
     val explored = mutable.Map[T, Double]()
     explored.put(initial, 0.0)
     while (frontier.nonEmpty) {
@@ -59,7 +59,7 @@ object Algorithms {
         val newCost = currentNode.cost + 1
         if (!explored.contains(child) || explored(child) > newCost) {
           explored put (child, newCost)
-          frontier enqueue Node(child, currentNode, newCost, heuristic(child))
+          frontier enqueue AStarNode(child, currentNode, newCost, heuristic(child))
         }
       }
     }

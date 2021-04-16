@@ -14,15 +14,15 @@ object Intro extends App {
 
   println("--------------------------------------")
 
-  val m3 = Maze(xxx2, Location(0, 0), Location(9, 9))
-  run(m3, Algorithms.astar(x => manhattanDistance(x, m.goal)))
+//  val m3 = Maze(xxx2, Location(0, 0), Location(9, 9))
+//  run(m3, Algorithms.astar(x => manhattanDistance(x, m.goal)))
 
   def run(m: Maze, algo: (Location, Location => Boolean, Location => List[Location]) => Node[Location]): Unit = {
     println(m.show())
     val solution1 = algo(m.start, m.goalTest, m.successors)
     if (solution1 == null) System.out.println("No solution found using depth-first search!")
     else {
-      val path1 = solution1.toPath()
+      val path1 = solution1.toPath
       m.mark(path1)
       println(m.show())
     }
