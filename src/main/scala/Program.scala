@@ -18,7 +18,7 @@ object Program extends App {
 
   def run(m: Maze, algo: (Location, Location => Boolean, Location => List[Location]) => Node[Location]): Unit = {
     println(m.show())
-    val solution1 = algo(m.start, m.goalTest, m.successors)
+    val solution1 = algo(m.start, m.checkIfGoalAchieved, m.successors)
     if (solution1 == null) System.out.println("No solution found using depth-first search!")
     else {
       val path1 = solution1.toPath
@@ -29,7 +29,7 @@ object Program extends App {
 
   def run2(m: Maze, algo: (Location, Location => Boolean, Location => List[Location]) => AStarNode[Location]): Unit = {
     println(m.show())
-    val solution1 = algo(m.start, m.goalTest, m.successors)
+    val solution1 = algo(m.start, m.checkIfGoalAchieved, m.successors)
     if (solution1 == null) System.out.println("No solution found using depth-first search!")
     else {
       val path1 = solution1.toPath()

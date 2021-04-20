@@ -10,14 +10,14 @@ case class Maze(
   val cols: Int = grid(0).length
   val directions = List((1, 0), (-1, 0), (0, 1), (0, -1))
 
-  def goalTest(ml: Location): Boolean = goal == ml
+  def checkIfGoalAchieved(ml: Location): Boolean = goal == ml
 
   def successors(ml: Location): List[Location] = {
-    val (row, col) = (ml.row, ml.column)
+    val position = (ml.row, ml.column)
     directions
-      .map { case (rowDirection, colDirection) => (row + rowDirection, col + colDirection) }
+      .map { direction => goInDirection(position, direction) }
       .filter(isInRange)
-      .filter { case (newR, newC) => grid(newR)(newC) != Cell.Blocked() }
+      .filter(isNotBlocked)
       .map { case (newR, newC) => Location(newR, newC) }
   }
 
@@ -32,9 +32,20 @@ case class Maze(
     prepareRows.mkString(System.lineSeparator)
   }
 
+  private def isNotBlocked(position: (Int, Int)): Boolean = {
+    val (row, col) = position
+    grid(row)(col) != Cell.Blocked()
+  }
+
   private def isInRange(coordinates: (Int, Int)): Boolean = {
     val (row, col) = coordinates
     0 <= row && row < rows && 0 <= col && col < cols
+  }
+
+  private def goInDirection(position: (Int, Int), direction: (Int, Int)): (Int, Int) = {
+    val (rowDirection, colDirection) = direction
+    val (row, col) = position
+    (row + rowDirection, col + colDirection)
   }
 }
 
