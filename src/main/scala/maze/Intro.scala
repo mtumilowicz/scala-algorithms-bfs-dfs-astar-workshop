@@ -52,7 +52,7 @@ object Intro extends App {
         "X,X,X,X, , , , , , ," +
         "X,X,X,X,X,X,G, , , ,"
 
-    val all = lab.split(",").map(Cell.from).filter(_ != null)
+    val all = lab.split(",").flatMap(Cell.from)
     all.grouped(10).toArray
   }
 
@@ -69,7 +69,7 @@ object Intro extends App {
         " ,X,X,X,X,X,X,X,X, ," +
         " , , , , , , , , ,G,"
 
-    val all = lab.split(",").map(Cell.from).filter(_ != null)
+    val all = lab.split(",").flatMap(Cell.from)
     all.grouped(10).toArray
   }
 

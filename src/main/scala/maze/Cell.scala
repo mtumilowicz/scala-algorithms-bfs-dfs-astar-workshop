@@ -15,13 +15,13 @@ object Cell {
 
   case class Path() extends Cell("*")
 
-  def from(code: String): Cell = {
+  def from(code: String): Option[Cell] = {
     code match {
-      case "X" => Blocked()
-      case "S" => Start()
-      case "G" => Goal()
-      case " " => Empty()
-      case _ => null
+      case "X" => Some(Blocked())
+      case "S" => Some(Start())
+      case "G" => Some(Goal())
+      case " " => Some(Empty())
+      case _ => None
     }
   }
 }
