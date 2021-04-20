@@ -1,21 +1,21 @@
 package maze
 
-import algorithms.Algorithms
+import algorithms.{AStarNode, Astar, Bfs, Dfs, Node}
 
 object Intro extends App {
 
   val m = Maze(xxx2, Location(0, 0), Location(9, 9))
-  run(m, Algorithms.dfs)
+  run(m, Dfs.run)
 
   println("--------------------------------------")
 
   val m2 = Maze(xxx2, Location(0, 0), Location(9, 9))
-  run(m2, Algorithms.bfs)
+  run(m2, Bfs.run)
 
   println("--------------------------------------")
 
-//  val m3 = Maze(xxx2, Location(0, 0), Location(9, 9))
-//  run(m3, Algorithms.astar(x => manhattanDistance(x, m.goal)))
+  val m3 = Maze(xxx2, Location(0, 0), Location(9, 9))
+  run2(m3, Astar.run(x => manhattanDistance(x, m.goal)))
 
   def run(m: Maze, algo: (Location, Location => Boolean, Location => List[Location]) => Node[Location]): Unit = {
     println(m.show())
@@ -23,6 +23,17 @@ object Intro extends App {
     if (solution1 == null) System.out.println("No solution found using depth-first search!")
     else {
       val path1 = solution1.toPath
+      m.mark(path1)
+      println(m.show())
+    }
+  }
+
+  def run2(m: Maze, algo: (Location, Location => Boolean, Location => List[Location]) => AStarNode[Location]): Unit = {
+    println(m.show())
+    val solution1 = algo(m.start, m.goalTest, m.successors)
+    if (solution1 == null) System.out.println("No solution found using depth-first search!")
+    else {
+      val path1 = solution1.toPath()
       m.mark(path1)
       println(m.show())
     }

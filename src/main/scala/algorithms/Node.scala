@@ -1,4 +1,4 @@
-package maze
+package algorithms
 
 import scala.annotation.tailrec
 
