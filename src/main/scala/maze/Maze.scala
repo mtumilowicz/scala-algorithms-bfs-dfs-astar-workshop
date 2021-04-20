@@ -21,14 +21,9 @@ case class Maze(
       .map { case (newR, newC) => Location(newR, newC) }
   }
 
-  def mark(path: List[Location]): Unit = {
-    path.foreach { step => grid(step.row)(step.column) = Cell.Path() }
-    grid(start.row)(start.column) = Cell.Start()
-    grid(goal.row)(goal.column) = Cell.Goal()
-  }
-
-  def show(): String = {
-    val prepareRows = grid.map(_.map(_.show()).mkString)
+  def show(path: List[Location] = List()): String = {
+    val copy = mark(path)
+    val prepareRows = copy.map(_.map(_.show()).mkString)
     prepareRows.mkString(System.lineSeparator)
   }
 
@@ -46,6 +41,14 @@ case class Maze(
     val (rowDirection, colDirection) = direction
     val (row, col) = position
     (row + rowDirection, col + colDirection)
+  }
+
+  private def mark(path: List[Location]): Array[Array[Cell]] = {
+    val copy = grid.map(_.map(identity))
+    path.foreach { step => copy(step.row)(step.column) = Cell.Path() }
+    copy(start.row)(start.column) = Cell.Start()
+    copy(goal.row)(goal.column) = Cell.Goal()
+    copy
   }
 }
 

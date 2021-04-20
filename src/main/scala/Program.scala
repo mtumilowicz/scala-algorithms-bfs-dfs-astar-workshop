@@ -3,17 +3,19 @@ import maze.{Cell, Location, Maze}
 
 object Program extends App {
 
-  val m = Maze(xxx2, Location(0, 0), Location(9, 9))
+  val maze = xxx2
+
+  val m = Maze(maze, Location(0, 0), Location(9, 9))
   run(m, Dfs.run)
 
   println("--------------------------------------")
 
-  val m2 = Maze(xxx2, Location(0, 0), Location(9, 9))
+  val m2 = Maze(maze, Location(0, 0), Location(9, 9))
   run(m2, Bfs.run)
 
   println("--------------------------------------")
 
-  val m3 = Maze(xxx2, Location(0, 0), Location(9, 9))
+  val m3 = Maze(maze, Location(0, 0), Location(9, 9))
   run2(m3, Astar.run(x => manhattanDistance(x, m.goal)))
 
   def run(m: Maze, algo: (Location, Location => Boolean, Location => List[Location]) => Node[Location]): Unit = {
@@ -22,8 +24,7 @@ object Program extends App {
     if (solution1 == null) System.out.println("No solution found using depth-first search!")
     else {
       val path1 = solution1.toPath
-      m.mark(path1)
-      println(m.show())
+      println(m.show(path1))
     }
   }
 
@@ -33,8 +34,7 @@ object Program extends App {
     if (solution1 == null) System.out.println("No solution found using depth-first search!")
     else {
       val path1 = solution1.toPath()
-      m.mark(path1)
-      println(m.show())
+      println(m.show(path1))
     }
   }
 
