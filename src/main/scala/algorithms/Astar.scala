@@ -4,7 +4,7 @@ import scala.collection.mutable
 
 object Astar {
   def run[T](heuristic: T => Double)
-              (initial: T, goalTest: T => Boolean, successors: T => List[T]): AStarNode[T] = {
+              (initial: T, goalTest: T => Boolean, successors: T => List[T]): Option[AStarNode[T]] = {
     val frontier = mutable.PriorityQueue[AStarNode[T]]()
     frontier.enqueue(AStarNode[T](initial, null, 0.0, heuristic(initial)))
     val explored = mutable.Map[T, Double]()
@@ -12,7 +12,7 @@ object Astar {
     while (frontier.nonEmpty) {
       val currentNode = frontier.dequeue()
       val currentState = currentNode.state
-      if (goalTest(currentState)) return currentNode
+      if (goalTest(currentState)) return Some(currentNode)
       for (child <- successors(currentState)) {
         val newCost = currentNode.cost + 1
         if (!explored.contains(child) || explored(child) > newCost) {
@@ -21,6 +21,6 @@ object Astar {
         }
       }
     }
-    null
+    None
   }
 }

@@ -3,7 +3,7 @@ package algorithms
 import scala.collection.mutable
 
 object Dfs {
-  def run[T](initial: T, goalTest: T => Boolean, successors: T => List[T]): Node[T] = {
+  def run[T](initial: T, goalTest: T => Boolean, successors: T => List[T]): Option[Node[T]] = {
     val frontier = mutable.Stack[Node[T]]()
     frontier push Node(initial)
 
@@ -12,7 +12,7 @@ object Dfs {
     while (frontier.nonEmpty) {
       val currentNode = frontier.pop
       val currentState = currentNode.state
-      if (goalTest(currentState)) return currentNode
+      if (goalTest(currentState)) return Some(currentNode)
       successors(currentState)
         .filter(!explored.contains(_))
         .foreach(child => {
@@ -20,6 +20,6 @@ object Dfs {
           frontier push Node(child, Some(currentNode))
         })
     }
-    null
+    None
   }
 }

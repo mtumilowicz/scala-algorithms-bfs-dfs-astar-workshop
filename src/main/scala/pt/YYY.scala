@@ -8,10 +8,8 @@ object YYY extends App {
 
   val start = PtState(MAX_NUM, MAX_NUM, true)
   val solution = Bfs.run(start, start.goalTest, start.successors)
-  if (solution == null) System.out.println("No solution found!")
-  else {
-    val path = solution.toPath
-    PtState.displaySolution(path)
+  Bfs.run(start, start.goalTest, start.successors) match {
+    case Some(solution) => PtState.displaySolution(solution.toPath)
+    case None => System.out.println("No solution found!")
   }
-
 }

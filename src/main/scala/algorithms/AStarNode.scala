@@ -14,7 +14,7 @@ case class AStarNode[T](
     mine.compareTo(theirs)
   }
 
-  def toPath(): List[T] = {
+  def toPath: List[T] = {
     val path = ListBuffer[T]()
     path.addOne(state)
     var node = this

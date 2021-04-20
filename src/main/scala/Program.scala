@@ -18,24 +18,20 @@ object Program extends App {
   val m3 = Maze(maze, Location(0, 0), Location(9, 9))
   run2(m3, Astar.run(x => manhattanDistance(x, m.goal)))
 
-  def run(m: Maze, algo: (Location, Location => Boolean, Location => List[Location]) => Node[Location]): Unit = {
+  def run(m: Maze, algo: (Location, Location => Boolean, Location => List[Location]) => Option[Node[Location]]): Unit = {
     println(m.show())
-    val solution1 = algo(m.start, m.checkIfGoalAchieved, m.successors)
-    if (solution1 == null) System.out.println("No solution found using depth-first search!")
-    else {
-      val path1 = solution1.toPath
-      println(m.show(path1))
-    }
+    println(algo(m.start, m.checkIfGoalAchieved, m.successors)
+      .map(solution => solution.toPath)
+      .map(m.show)
+      .getOrElse("No solution found using depth-first search!"))
   }
 
-  def run2(m: Maze, algo: (Location, Location => Boolean, Location => List[Location]) => AStarNode[Location]): Unit = {
+  def run2(m: Maze, algo: (Location, Location => Boolean, Location => List[Location]) => Option[AStarNode[Location]]): Unit = {
     println(m.show())
-    val solution1 = algo(m.start, m.checkIfGoalAchieved, m.successors)
-    if (solution1 == null) System.out.println("No solution found using depth-first search!")
-    else {
-      val path1 = solution1.toPath()
-      println(m.show(path1))
-    }
+    println(algo(m.start, m.checkIfGoalAchieved, m.successors)
+      .map(solution => solution.toPath)
+      .map(m.show)
+      .getOrElse("No solution found using depth-first search!"))
   }
 
   def xxx: Array[Array[Cell]] = {
