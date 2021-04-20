@@ -1,8 +1,7 @@
-package maze
-
 import algorithms.{AStarNode, Astar, Bfs, Dfs, Node}
+import maze.{Cell, Location, Maze}
 
-object Intro extends App {
+object Program extends App {
 
   val m = Maze(xxx2, Location(0, 0), Location(9, 9))
   run(m, Dfs.run)
@@ -41,7 +40,7 @@ object Intro extends App {
 
   def xxx: Array[Array[Cell]] = {
     val lab =
-        "S, , , ,X,X,X,X,X,X," +
+      "S, , , ,X,X,X,X,X,X," +
         "X,X,X, ,X,X,X,X,X,X," +
         "X,X,X, ,X,X,X,X,X,X," +
         " , , , ,X,X,X,X,X,X," +
@@ -58,7 +57,7 @@ object Intro extends App {
 
   def xxx2: Array[Array[Cell]] = {
     val lab =
-        "S, , , , , , , , , ," +
+      "S, , , , , , , , , ," +
         " ,X,X,X,X,X,X,X,X, ," +
         " ,X,X,X,X,X,X,X,X, ," +
         " ,X,X,X,X,X,X,X,X, ," +
