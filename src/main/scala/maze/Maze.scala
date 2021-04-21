@@ -23,7 +23,7 @@ case class Maze(
 
   def show(path: List[Location] = List()): String = {
     val copy = mark(path)
-    val prepareRows = copy.map(_.map(_.show()).mkString)
+    val prepareRows = copy.map(_.map(_.show()).mkString(","))
     prepareRows.mkString(System.lineSeparator)
   }
 
