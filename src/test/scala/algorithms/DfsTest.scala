@@ -54,7 +54,7 @@ class DfsTest extends AnyFeatureSpec with GivenWhenThen {
   }
 
   def manyRoutes: Array[Array[Cell]] = {
-    val lab =
+    val maze =
         " , , , , , , , , , ," +
         " , , , , , , , , , ," +
         " , , ,S, , , , , , ," +
@@ -66,8 +66,7 @@ class DfsTest extends AnyFeatureSpec with GivenWhenThen {
         " , , , , , , , , , ," +
         " , , , , , , , , , ,"
 
-    val all = lab.split(",").flatMap(Cell.from)
-    all.grouped(10).toArray
+    convertToArray(maze)
   }
 
   def manyRoutesSolution: String =
@@ -83,7 +82,7 @@ class DfsTest extends AnyFeatureSpec with GivenWhenThen {
     " , , , , , , , , , "
 
   def twoRoutes: Array[Array[Cell]] = {
-    val lab =
+    val maze =
         "S, , , , , , , , , ," +
         " ,X,X,X,X,X,X,X,X, ," +
         " ,X,X,X,X,X,X,X,X, ," +
@@ -95,8 +94,7 @@ class DfsTest extends AnyFeatureSpec with GivenWhenThen {
         " ,X,X,X,X,X,X,X,X, ," +
         " , , , , , , , , ,G,"
 
-    val all = lab.split(",").flatMap(Cell.from)
-    all.grouped(10).toArray
+    convertToArray(maze)
   }
 
   def twoRoutesSolution: String =
@@ -112,7 +110,7 @@ class DfsTest extends AnyFeatureSpec with GivenWhenThen {
       " , , , , , , , , ,G"
 
   def oneRoute: Array[Array[Cell]] = {
-    val lab =
+    val maze =
         "S, , , ,X,X,X,X,X,X," +
         "X,X,X, ,X,X,X,X,X,X," +
         "X,X,X, ,X,X,X,X,X,X," +
@@ -124,8 +122,7 @@ class DfsTest extends AnyFeatureSpec with GivenWhenThen {
         "X,X,X,X, , , , , , ," +
         "X,X,X,X,X,X,G, , , ,"
 
-    val all = lab.split(",").flatMap(Cell.from)
-    all.grouped(10).toArray
+    convertToArray(maze)
   }
 
   def oneRouteSolution: String =
@@ -141,7 +138,7 @@ class DfsTest extends AnyFeatureSpec with GivenWhenThen {
       "X,X,X,X,X,X,G, , , "
 
   def zeroRoutes: Array[Array[Cell]] = {
-    val lab =
+    val maze =
         "S, , , ,X,X,X,X,X,X," +
         "X,X,X, ,X,X,X,X,X,X," +
         "X,X,X, ,X,X,X,X,X,X," +
@@ -153,7 +150,11 @@ class DfsTest extends AnyFeatureSpec with GivenWhenThen {
         "X,X,X,X, , , , , , ," +
         "X,X,X,X,X,X,G, , , ,"
 
-    val all = lab.split(",").flatMap(Cell.from)
+    convertToArray(maze)
+  }
+
+  def convertToArray(maze: String): Array[Array[Cell]] = {
+    val all = maze.split(",").flatMap(Cell.from)
     all.grouped(10).toArray
   }
 
