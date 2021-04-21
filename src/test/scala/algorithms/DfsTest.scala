@@ -43,13 +43,14 @@ class DfsTest extends AnyFeatureSpec with GivenWhenThen {
 
     Scenario("solvable maze with many routes") {
       Given("one route")
-      val maze = Maze(manyRoutes, Location(0, 0), Location(9, 9))
+      val maze = Maze(manyRoutes, Location(2, 3), Location(6, 6))
 
       When("solve")
       val solution = Dfs.run(maze.start, maze.checkIfGoalAchieved, maze.successors)
 
       Then("is solvable")
       solution.map(_.toPath).orNull shouldBe manyRouteSolution
+      println(solution.map(_.toPath).map(maze.show).orNull)
     }
   }
 
@@ -71,15 +72,7 @@ class DfsTest extends AnyFeatureSpec with GivenWhenThen {
   }
 
   def manyRouteSolution: List[Location] =
-    List(
-      Location(0,0), Location(0,1), Location(0,2), Location(0,3), Location(0,4), Location(0,5), Location(0,6),
-      Location(0,7), Location(0,8), Location(0,9), Location(1,9), Location(2,9), Location(2,8), Location(2,7),
-      Location(2,6), Location(2,5), Location(2,4), Location(2,3), Location(2,2), Location(2,1), Location(2,0),
-      Location(3,0), Location(4,0), Location(4,1), Location(4,2), Location(4,3), Location(4,4), Location(4,5),
-      Location(4,6), Location(4,7), Location(4,8), Location(4,9), Location(5,9), Location(6,9), Location(6,8),
-      Location(6,7), Location(6,6), Location(6,5), Location(6,4), Location(6,3), Location(6,2), Location(6,1),
-      Location(6,0), Location(7,0), Location(8,0), Location(8,1), Location(8,2), Location(8,3), Location(8,4),
-      Location(8,5), Location(8,6), Location(8,7), Location(8,8), Location(8,9), Location(9,9))
+    List(Location(2,3), Location(2,2), Location(2,1), Location(2,0), Location(1,0), Location(0,0), Location(0,1), Location(0,2), Location(0,3), Location(0,4), Location(0,5), Location(0,6), Location(0,7), Location(0,8), Location(0,9), Location(1,9), Location(2,9), Location(2,8), Location(2,7), Location(2,6), Location(2,5), Location(3,5), Location(3,4), Location(4,4), Location(4,3), Location(4,2), Location(4,1), Location(4,0), Location(5,0), Location(6,0), Location(6,1), Location(6,2), Location(6,3), Location(6,4), Location(6,5), Location(6,6))
 
   def twoRoutes: Array[Array[Cell]] = {
     val lab =
