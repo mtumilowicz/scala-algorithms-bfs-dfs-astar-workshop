@@ -1,7 +1,9 @@
 # Project exclude paths
+/project/target/*
 /project/target/
 /target/
 /target/scala-2.13/classes/
 /.bsp
 /.idea
 /null
+/project/project
