@@ -5,7 +5,7 @@ import scala.collection.mutable
 object Astar {
   def run[T](heuristic: T => Double)
               (initial: T, goalTest: T => Boolean, successors: T => List[T]): Option[AStarNode[T]] = {
-    val frontier = mutable.PriorityQueue[AStarNode[T]]()
+    val frontier = mutable.PriorityQueue[AStarNode[T]]()(Ordering[AStarNode[T]].reverse)
     frontier.enqueue(AStarNode[T](initial, null, 0.0, heuristic(initial)))
     val explored = mutable.Map[T, Double]()
     explored.put(initial, 0.0)

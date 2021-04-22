@@ -70,16 +70,16 @@ class AstarTest extends AnyFeatureSpec with GivenWhenThen {
   }
 
   def manyRoutesSolution: String =
-    "*,*,*,*, ,*,*,*,*,*" + System.lineSeparator() +
-    "*, , ,*, ,*, , , ,*" + System.lineSeparator() +
-    "*, , ,S, ,*, , , ,*" + System.lineSeparator() +
-    "*, , , ,*,*, , , ,*" + System.lineSeparator() +
-    "*, , , ,*, , , , ,*" + System.lineSeparator() +
-    "*, , ,*,*, , , , ,*" + System.lineSeparator() +
-    "*, , ,*, , ,G, , ,*" + System.lineSeparator() +
-    "*, ,*,*, , ,*, , ,*" + System.lineSeparator() +
-    "*, ,*, , , ,*,*, ,*" + System.lineSeparator() +
-    "*,*,*, , , , ,*,*,*"
+      " , , , , , , , , , " + System.lineSeparator() +
+      " , , , , , , , , , " + System.lineSeparator() +
+      " , , ,S, , , , , , " + System.lineSeparator() +
+      " , , ,*, , , , , , " + System.lineSeparator() +
+      " , , ,*,*, , , , , " + System.lineSeparator() +
+      " , , , ,*,*, , , , " + System.lineSeparator() +
+      " , , , , ,*,G, , , " + System.lineSeparator() +
+      " , , , , , , , , , " + System.lineSeparator() +
+      " , , , , , , , , , " + System.lineSeparator() +
+      " , , , , , , , , , "
 
   def twoRoutes: Array[Array[Cell]] = {
     val maze =
