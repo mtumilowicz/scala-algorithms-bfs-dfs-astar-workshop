@@ -1,0 +1,14 @@
+To get a better picture of why breadth-first search always finds the shortest solution
+path where one exists, consider trying to find the path with the fewest number of stops
+between Boston and New York by train. If you keep going in the same direction and
+backtracking when you hit a dead end (as in depth-first search), you may first find a
+route all the way to Seattle before it connects back to New York. However, in a
+breadth-first search, you will first check all of the stations one stop away from Boston.
+Then you will check all of the stations two stops away from Boston. Then you will
+check all of the stations three stops away from Boston. This will keep going until you
+find New York. Therefore, when you do find New York, you will know you have found
+the route with the fewest stops, because you already checked all of the stations that are
+fewer stops away from Boston, and none of them was New York.
+    * Changing the
+      frontier from a stack to a queue changes the order in which states are searched and
+      ensures that the states closest to the start state are searched first.
