@@ -1,12 +1,13 @@
+# scala-algorithms-bfs-dfs-astar-workshop
 * references
     * https://www.manning.com/books/classic-computer-science-problems-in-java
 
-# preface
+## preface
 * goal of this workshop:
     * basic understanding of bfs, dfs and astar algorithms
     * the ability to apply theory in practice
 
-# dfs
+## dfs
 ```
 val frontier = stack
 frontier push initialNode
@@ -30,7 +31,7 @@ note also that you have some structure to track path
 case class Node[T](state: T, parent: Option[Node[T]] = Option.empty)
 ```
 
-# bfs
+## bfs
 * always finds the shortest solution path where one exists
     * why?
         * find path from Cracow to Warsaw with fewest stops (by train)
@@ -41,9 +42,9 @@ case class Node[T](state: T, parent: Option[Node[T]] = Option.empty)
             * when you do find Warsaw, you will know you have found the route with the fewest stops
                 * all of the stations that are fewer stops away from Cracow were checked
 
-# astar
+## astar
 
-# practice
+## practice
 * task 1
     * you have a maze (n x m) with start location (startX, startY), goal location (goalX, goalY) and
     possible walls
