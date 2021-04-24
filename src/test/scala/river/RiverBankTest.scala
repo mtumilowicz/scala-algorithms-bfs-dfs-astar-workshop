@@ -5,18 +5,18 @@ import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
-class BankTest extends AnyFeatureSpec with GivenWhenThen {
+class RiverBankTest extends AnyFeatureSpec with GivenWhenThen {
 
   Feature("solve the riddle") {
     Scenario("3 policemen, 3 thieves") {
       Given("left bank state")
-      val start = LeftBank(3, 3)
+      val start = LeftRiverBank(3, 3)
 
       When("solve")
-      val solution = Bfs.run(start, Bank.checkIfGoalAchieved, (x: Bank) => x.successors())
+      val solution = Bfs.run(start, RiverBank.checkIfGoalAchieved, (x: RiverBank) => x.successors())
 
       Then("is solvable")
-      solution.map(_.toPath).map(Bank.show).orNull shouldBe list
+      solution.map(_.toPath).map(RiverBank.show).orNull shouldBe list
     }
   }
 
