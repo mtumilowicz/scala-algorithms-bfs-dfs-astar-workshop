@@ -44,6 +44,24 @@ case class Node[T](state: T, parent: Option[Node[T]] = Option.empty)
                 * all of the stations that are fewer stops away from Cracow were checked
 
 ## astar
+```
+val frontier = priorityQueue // by heuristics + cost
+frontier enqueue initial
+val explored = map // state, cost
+explored put (initial, 0.0)
+while (frontier.nonEmpty) {
+  val current = frontier.dequeue()
+  if (current is goal) return Some(current)
+  for (child <- successors(current)) {
+    val newCost = currentNode.cost + 1
+    if (child is not explored || explored(child) > newCost) {
+      explored put (child, newCost)
+      frontier enqueue child
+    }
+  }
+}
+None
+```
 
 ## practice
 * task 1
