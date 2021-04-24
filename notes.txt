@@ -32,6 +32,7 @@ case class Node[T](state: T, parent: Option[Node[T]] = Option.empty)
 ```
 
 ## bfs
+* just take dfs and use queue instead of stack
 * always finds the shortest solution path where one exists
     * why?
         * find path from Cracow to Warsaw with fewest stops (by train)
