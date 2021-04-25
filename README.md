@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.com/mtumilowicz/scala-algorithms-bfs-dfs-astar-workshop.svg?branch=master)](https://travis-ci.com/mtumilowicz/scala-algorithms-bfs-dfs-astar-workshop)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 # scala-algorithms-bfs-dfs-astar-workshop
 * references
     * https://www.manning.com/books/classic-computer-science-problems-in-java
