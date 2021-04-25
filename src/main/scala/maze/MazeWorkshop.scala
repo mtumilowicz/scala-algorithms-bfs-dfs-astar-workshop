@@ -1,6 +1,6 @@
 package maze
 
-case class Maze(
+case class MazeWorkshop(
                  grid: Array[Array[Cell]],
                  start: Location,
                  goal: Location,
@@ -10,15 +10,17 @@ case class Maze(
   val cols: Int = grid(0).length
   val directions = List((1, 0), (-1, 0), (0, 1), (0, -1))
 
-  def checkIfGoalAchieved(ml: Location): Boolean = goal == ml
+  def checkIfGoalAchieved(location: Location): Boolean = false
+  // chech if location is equal to goal
 
-  def successors(ml: Location): List[Location] = {
-    val position = (ml.row, ml.column)
-    directions
-      .map { direction => goInDirection(position, direction) }
-      .filter(isInRange)
-      .filter(isNotBlocked)
-      .map { case (newR, newC) => Location(newR, newC) }
+  def successors(location: Location): List[Location] = {
+    // define position as a tuple from location
+    // hint: start from directions
+    // generate all possible directions from given position, hint: goInDirection(position, direction)
+    // filter that in range, hint: isInRange
+    // filter not blocked, hint: isNotBlocked
+    // create locations from that
+    List()
   }
 
   def show(path: List[Location] = List()): String = {

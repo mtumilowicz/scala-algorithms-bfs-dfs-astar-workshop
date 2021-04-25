@@ -1,17 +1,18 @@
 package maze.workshop
 
 import algorithms.workshop.BfsWorkshop
-import maze.{Cell, Location, Maze}
-import org.scalatest.GivenWhenThen
+import maze.{Cell, Location, MazeAnswer}
+import org.scalatest.{GivenWhenThen, Ignore}
 import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
+@Ignore
 class MazeBfsWorkshopTest extends AnyFeatureSpec with GivenWhenThen {
 
   Feature("solve the maze") {
     Scenario("unsolvable maze") {
       Given("zero route")
-      val maze = Maze(zeroRoutes, Location(0, 0), Location(9, 9))
+      val maze = MazeAnswer(zeroRoutes, Location(0, 0), Location(9, 9))
 
       When("solve")
       val solution = BfsWorkshop.run(maze.start, maze.checkIfGoalAchieved, maze.successors)
@@ -22,7 +23,7 @@ class MazeBfsWorkshopTest extends AnyFeatureSpec with GivenWhenThen {
 
     Scenario("solvable maze with one route") {
       Given("one route")
-      val maze = Maze(oneRoute, Location(0, 0), Location(9, 6))
+      val maze = MazeAnswer(oneRoute, Location(0, 0), Location(9, 6))
 
       When("solve")
       val solution = BfsWorkshop.run(maze.start, maze.checkIfGoalAchieved, maze.successors)
@@ -33,7 +34,7 @@ class MazeBfsWorkshopTest extends AnyFeatureSpec with GivenWhenThen {
 
     Scenario("solvable maze with two routes") {
       Given("two routes")
-      val maze = Maze(twoRoutes, Location(0, 0), Location(9, 9))
+      val maze = MazeAnswer(twoRoutes, Location(0, 0), Location(9, 9))
 
       When("solve")
       val solution = BfsWorkshop.run(maze.start, maze.checkIfGoalAchieved, maze.successors)
@@ -44,7 +45,7 @@ class MazeBfsWorkshopTest extends AnyFeatureSpec with GivenWhenThen {
 
     Scenario("solvable maze with many routes") {
       Given("multiple routes")
-      val maze = Maze(manyRoutes, Location(2, 3), Location(6, 6))
+      val maze = MazeAnswer(manyRoutes, Location(2, 3), Location(6, 6))
 
       When("solve")
       val solution = BfsWorkshop.run(maze.start, maze.checkIfGoalAchieved, maze.successors)
