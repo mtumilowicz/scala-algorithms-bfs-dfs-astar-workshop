@@ -7,22 +7,19 @@ import scala.collection.mutable
 object AstarWorkshop {
   def run[T](heuristic: T => Double)
             (initial: T, goalTest: T => Boolean, successors: T => List[T]): Option[AStarNode[T]] = {
-    val frontier = mutable.PriorityQueue[AStarNode[T]]().reverse
-    frontier.enqueue(AStarNode[T](initial, null, 0.0, heuristic(initial)))
-    val explored = mutable.Map[T, Double]()
-    explored.put(initial, 0.0)
-    while (frontier.nonEmpty) {
-      val currentNode = frontier.dequeue()
-      val currentState = currentNode.state
-      if (goalTest(currentState)) return Some(currentNode)
-      for (child <- successors(currentState)) {
-        val newCost = currentNode.cost + 1
-        if (!explored.contains(child) || explored(child) > newCost) {
-          explored put(child, newCost)
-          frontier enqueue AStarNode(child, currentNode, newCost, heuristic(child))
-        }
-      }
-    }
+    // frontier = priority queue of node (reverse it), hint mutable.PriorityQueue, AStarNode, reverse
+    // enqueue initial, hint: cost = 0, heuristic = calculate it
+    // explored = map of T and cost, hint = mutable.Map
+    // put initial
+    // while there is any in frontier, hint: nonEmpty
+    // dequeue best
+    // get state
+    // test if goal, if yes - return
+    // process all successor, hint: successors(currentState)
+    // count newCost in the simplest way: previous cost + 1
+    // if is not explored yet or newCost is better that already counted cost
+    // put in explored with newCost
+    // enqueue in frontier
     None
   }
 }
