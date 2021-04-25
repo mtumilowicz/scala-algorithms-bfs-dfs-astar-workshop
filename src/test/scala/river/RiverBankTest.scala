@@ -1,6 +1,6 @@
 package river
 
-import algorithms.Bfs
+import algorithms.answer.BfsAnswer
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
@@ -13,7 +13,7 @@ class RiverBankTest extends AnyFeatureSpec with GivenWhenThen {
       val start = LeftRiverBank(3, 3)
 
       When("solve")
-      val solution = Bfs.run(start, RiverBank.checkIfGoalAchieved, (x: RiverBank) => x.successors())
+      val solution = BfsAnswer.run(start, RiverBank.checkIfGoalAchieved, (x: RiverBank) => x.successors())
 
       Then("is solvable")
       solution.map(_.toPath).map(RiverBank.show).orNull shouldBe list

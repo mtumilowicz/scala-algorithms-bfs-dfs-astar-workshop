@@ -1,11 +1,12 @@
-package algorithms
+package maze.workshop
 
+import algorithms.workshop.AstarWorkshop
 import maze.{Cell, Location, Maze}
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
-class AstarTest extends AnyFeatureSpec with GivenWhenThen {
+class MazeAstarWorkshopTest extends AnyFeatureSpec with GivenWhenThen {
 
   Feature("solve the maze") {
     Scenario("unsolvable maze") {
@@ -13,7 +14,7 @@ class AstarTest extends AnyFeatureSpec with GivenWhenThen {
       val maze = Maze(zeroRoutes, Location(0, 0), Location(9, 9))
 
       When("solve")
-      val solution = Astar.run(location => manhattanDistance(location, maze.goal))(maze.start, maze.checkIfGoalAchieved, maze.successors)
+      val solution = AstarWorkshop.run(location => manhattanDistance(location, maze.goal))(maze.start, maze.checkIfGoalAchieved, maze.successors)
 
       Then("is empty")
       solution shouldBe None
@@ -24,7 +25,7 @@ class AstarTest extends AnyFeatureSpec with GivenWhenThen {
       val maze = Maze(oneRoute, Location(0, 0), Location(9, 6))
 
       When("solve")
-      val solution = Astar.run(location => manhattanDistance(location, maze.goal))(maze.start, maze.checkIfGoalAchieved, maze.successors)
+      val solution = AstarWorkshop.run(location => manhattanDistance(location, maze.goal))(maze.start, maze.checkIfGoalAchieved, maze.successors)
 
       Then("is solvable")
       solution.map(_.toPath).map(maze.show).orNull shouldBe oneRouteSolution
@@ -35,7 +36,7 @@ class AstarTest extends AnyFeatureSpec with GivenWhenThen {
       val maze = Maze(twoRoutes, Location(0, 0), Location(9, 9))
 
       When("solve")
-      val solution = Astar.run(location => manhattanDistance(location, maze.goal))(maze.start, maze.checkIfGoalAchieved, maze.successors)
+      val solution = AstarWorkshop.run(location => manhattanDistance(location, maze.goal))(maze.start, maze.checkIfGoalAchieved, maze.successors)
 
       Then("is solvable")
       solution.map(_.toPath).map(maze.show).orNull shouldBe twoRoutesSolution
@@ -46,7 +47,7 @@ class AstarTest extends AnyFeatureSpec with GivenWhenThen {
       val maze = Maze(manyRoutes, Location(2, 3), Location(6, 6))
 
       When("solve")
-      val solution = Astar.run(location => manhattanDistance(location, maze.goal))(maze.start, maze.checkIfGoalAchieved, maze.successors)
+      val solution = AstarWorkshop.run(location => manhattanDistance(location, maze.goal))(maze.start, maze.checkIfGoalAchieved, maze.successors)
 
       Then("is solvable")
       solution.map(_.toPath).map(maze.show).orNull shouldBe manyRoutesSolution

@@ -1,11 +1,12 @@
-package algorithms
+package maze.answer
 
+import algorithms.answer.AstarAnswer
 import maze.{Cell, Location, Maze}
 import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
-class BfsTest extends AnyFeatureSpec with GivenWhenThen {
+class MazeAstarAnswerTest extends AnyFeatureSpec with GivenWhenThen {
 
   Feature("solve the maze") {
     Scenario("unsolvable maze") {
@@ -13,7 +14,7 @@ class BfsTest extends AnyFeatureSpec with GivenWhenThen {
       val maze = Maze(zeroRoutes, Location(0, 0), Location(9, 9))
 
       When("solve")
-      val solution = Bfs.run(maze.start, maze.checkIfGoalAchieved, maze.successors)
+      val solution = AstarAnswer.run(location => manhattanDistance(location, maze.goal))(maze.start, maze.checkIfGoalAchieved, maze.successors)
 
       Then("is empty")
       solution shouldBe None
@@ -24,7 +25,7 @@ class BfsTest extends AnyFeatureSpec with GivenWhenThen {
       val maze = Maze(oneRoute, Location(0, 0), Location(9, 6))
 
       When("solve")
-      val solution = Bfs.run(maze.start, maze.checkIfGoalAchieved, maze.successors)
+      val solution = AstarAnswer.run(location => manhattanDistance(location, maze.goal))(maze.start, maze.checkIfGoalAchieved, maze.successors)
 
       Then("is solvable")
       solution.map(_.toPath).map(maze.show).orNull shouldBe oneRouteSolution
@@ -35,7 +36,7 @@ class BfsTest extends AnyFeatureSpec with GivenWhenThen {
       val maze = Maze(twoRoutes, Location(0, 0), Location(9, 9))
 
       When("solve")
-      val solution = Bfs.run(maze.start, maze.checkIfGoalAchieved, maze.successors)
+      val solution = AstarAnswer.run(location => manhattanDistance(location, maze.goal))(maze.start, maze.checkIfGoalAchieved, maze.successors)
 
       Then("is solvable")
       solution.map(_.toPath).map(maze.show).orNull shouldBe twoRoutesSolution
@@ -46,7 +47,7 @@ class BfsTest extends AnyFeatureSpec with GivenWhenThen {
       val maze = Maze(manyRoutes, Location(2, 3), Location(6, 6))
 
       When("solve")
-      val solution = Bfs.run(maze.start, maze.checkIfGoalAchieved, maze.successors)
+      val solution = AstarAnswer.run(location => manhattanDistance(location, maze.goal))(maze.start, maze.checkIfGoalAchieved, maze.successors)
 
       Then("is solvable")
       solution.map(_.toPath).map(maze.show).orNull shouldBe manyRoutesSolution
@@ -70,16 +71,16 @@ class BfsTest extends AnyFeatureSpec with GivenWhenThen {
   }
 
   def manyRoutesSolution: String =
-    " , , , , , , , , , " + System.lineSeparator() +
-    " , , , , , , , , , " + System.lineSeparator() +
-    " , , ,S, , , , , , " + System.lineSeparator() +
-    " , , ,*, , , , , , " + System.lineSeparator() +
-    " , , ,*, , , , , , " + System.lineSeparator() +
-    " , , ,*, , , , , , " + System.lineSeparator() +
-    " , , ,*,*,*,G, , , " + System.lineSeparator() +
-    " , , , , , , , , , " + System.lineSeparator() +
-    " , , , , , , , , , " + System.lineSeparator() +
-    " , , , , , , , , , "
+      " , , , , , , , , , " + System.lineSeparator() +
+      " , , , , , , , , , " + System.lineSeparator() +
+      " , , ,S, , , , , , " + System.lineSeparator() +
+      " , , ,*, , , , , , " + System.lineSeparator() +
+      " , , ,*,*, , , , , " + System.lineSeparator() +
+      " , , , ,*,*, , , , " + System.lineSeparator() +
+      " , , , , ,*,G, , , " + System.lineSeparator() +
+      " , , , , , , , , , " + System.lineSeparator() +
+      " , , , , , , , , , " + System.lineSeparator() +
+      " , , , , , , , , , "
 
   def twoRoutes: Array[Array[Cell]] = {
     val maze =
@@ -156,6 +157,12 @@ class BfsTest extends AnyFeatureSpec with GivenWhenThen {
   def convertToArray(maze: String): Array[Array[Cell]] = {
     val all = maze.split(",").flatMap(Cell.from)
     all.grouped(10).toArray
+  }
+
+  def manhattanDistance(ml: Location, goal: Location): Double = {
+    val xdist = Math.abs(ml.column - goal.column)
+    val ydist = Math.abs(ml.row - goal.row)
+    xdist + ydist
   }
 
 }

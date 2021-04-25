@@ -1,8 +1,10 @@
-package algorithms
+package algorithms.workshop
+
+import algorithms.Node
 
 import scala.collection.mutable
 
-object Dfs {
+object DfsWorkshop {
   def run[T](initial: T, goalTest: T => Boolean, successors: T => List[T]): Option[Node[T]] = {
     val frontier = mutable.Stack[Node[T]]()
     frontier push Node(initial)
