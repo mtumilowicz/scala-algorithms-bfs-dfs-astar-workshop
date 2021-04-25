@@ -6,22 +6,16 @@ import scala.collection.mutable
 
 object DfsWorkshop {
   def run[T](initial: T, goalTest: T => Boolean, successors: T => List[T]): Option[Node[T]] = {
-    val frontier = mutable.Stack[Node[T]]()
-    frontier push Node(initial)
+    // frontier as a stack, hint: mutable.Stack
+    // push initial node
+    // explored as a set, hint: mutable.Set
 
-    val explored = mutable.Set[T]()
-
-    while (frontier.nonEmpty) {
-      val currentNode = frontier.pop
-      val currentState = currentNode.state
-      if (goalTest(currentState)) return Some(currentNode)
-      successors(currentState)
-        .filter(!explored.contains(_))
-        .foreach(child => {
-          explored add child
-          frontier push Node(child, Some(currentNode))
-        })
-    }
+    // until frontier not empty, hint: nonEmpty
+    // pop current node
+    // get its state
+    // test if goal, if yes - return
+    // get successors, filter not explored
+    // add to explored and push to frontier
     None
   }
 }

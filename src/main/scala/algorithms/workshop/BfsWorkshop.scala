@@ -6,22 +6,16 @@ import scala.collection.mutable
 
 object BfsWorkshop {
   def run[T](initial: T, goalTest: T => Boolean, successors: T => List[T]): Option[Node[T]] = {
-    val frontier = mutable.Queue[Node[T]]()
-    frontier enqueue Node(initial)
+    // frontier as a queue, hint: mutable.Queue
+    // put initial node
+    // explored as a set, hint: mutable.Set
 
-    val explored = mutable.Set[T]()
-
-    while (frontier.nonEmpty) {
-      val currentNode = frontier.dequeue
-      val currentState = currentNode.state
-      if (goalTest(currentState)) return Some(currentNode)
-      successors(currentState)
-        .filter(!explored.contains(_))
-        .foreach(child => {
-          explored add child
-          frontier enqueue Node(child, Some(currentNode))
-        })
-    }
+    // until frontier not empty, hint: nonEmpty
+    // dequeue current node
+    // get its state
+    // test if goal, if yes - return
+    // get successors, filter not explored
+    // add to explored and enqueue in frontier
     None
   }
 }
