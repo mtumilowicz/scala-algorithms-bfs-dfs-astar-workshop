@@ -1,6 +1,7 @@
 # scala-algorithms-bfs-dfs-astar-workshop
 * references
     * https://www.manning.com/books/classic-computer-science-problems-in-java
+    * https://medium.com/@nicholas.w.swift/easy-a-star-pathfinding-7e6689c7f7b2
 
 ## preface
 * goal of this workshop:
@@ -44,24 +45,43 @@ case class Node[T](state: T, parent: Option[Node[T]] = Option.empty)
                 * all of the stations that are fewer stops away from Cracow were checked
 
 ## astar
-```
-val frontier = priorityQueue // by heuristics + cost
-frontier enqueue initial
-val explored = map // state, cost
-explored put (initial, 0.0)
-while (frontier.nonEmpty) {
-  val current = frontier.dequeue()
-  if (current is goal) return Some(current)
-  for (child <- successors(current)) {
-    val newCost = currentNode.cost + 1
-    if (child is not explored || explored(child) > newCost) {
-      explored put (child, newCost)
-      frontier enqueue child
+* one important aspect of A* is `f = g + h`
+    * are in our Node class and get calculated every time we create a new node
+        ```
+        case class AStarNode[T](
+                                 state: T,
+                                 parent: AStarNode[T] = null,
+                                 cost: Double = 0.0,
+                                 heuristic: Double = 0.0
+                               )
+        ```
+    * F - total cost of the node
+        * we can look at all our nodes and say: "Hey, is this the best node I can pick to move
+        forward with right now?"
+    * G - distance between the current node and the start node
+    * H - heuristic (estimated distance from the current node to the end node)
+* code
+    ```
+    val frontier = priorityQueue // by heuristics + cost
+    frontier enqueue initial
+    val explored = map // state, cost
+    explored put (initial, 0.0)
+    while (frontier.nonEmpty) {
+      val current = frontier.dequeue()
+      if (current is goal) return Some(current)
+      for (child <- successors(current)) {
+        val newCost = currentNode.cost + 1
+        if (child is not explored || explored(child) > newCost) {
+          explored put (child, newCost)
+          frontier enqueue child
+        }
+      }
     }
-  }
-}
-None
-```
+    None
+    ```
+    * `explored(child) > newCost`
+        * check if this path to that square is better, using G cost as the measure
+        * a lower G cost means that this is a better path
 
 ## practice
 * task 1
