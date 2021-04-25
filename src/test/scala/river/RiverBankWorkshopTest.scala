@@ -2,10 +2,11 @@ package river
 
 import algorithms.answer.BfsAnswer
 import algorithms.workshop.BfsWorkshop
-import org.scalatest.GivenWhenThen
+import org.scalatest.{GivenWhenThen, Ignore}
 import org.scalatest.featurespec.AnyFeatureSpec
 import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
+@Ignore
 class RiverBankWorkshopTest extends AnyFeatureSpec with GivenWhenThen {
 
   Feature("solve the riddle") {

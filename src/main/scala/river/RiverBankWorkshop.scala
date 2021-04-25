@@ -1,7 +1,5 @@
 package river
 
-import scala.collection.mutable.ListBuffer
-
 sealed trait RiverBankWorkshop {
   val policemen: Int
   val thieves: Int
@@ -15,19 +13,19 @@ sealed trait RiverBankWorkshop {
   def toOppositeBank(p: Int, t: Int): RiverBankWorkshop
 
   def successors(): List[RiverBankWorkshop] = {
-    val next = ListBuffer[RiverBankWorkshop]()
-    if (policemen > 1) next += toOppositeBank(2, 0)
-    if (policemen > 0) next += toOppositeBank(1, 0)
-    if (thieves > 1) next += toOppositeBank(0, 2)
-    if (thieves > 0) next += toOppositeBank(0, 1)
-    if (thieves > 0 && policemen > 0) next += toOppositeBank(1, 1)
-
-    next.filter(_.isLegal).toList
+    // define successors in terms of:
+    // policemen (two cases)
+    // thieves (two cases)
+    // policemen and thieves - 1 case
+    // hint: toOppositeBank
+    // filter only legals, hint: isLegal
+    List()
   }
 
   def isLegal: Boolean = {
-    if (this.policemen < this.thieves && this.policemen > 0) return false
-    if (this.oppositeBankPolicemen < this.oppositeBankThieves && this.oppositeBankPolicemen > 0) return false
+    // policemen cannot be less that thieves if there are any
+    // opposite bank the same
+    // otherwise true
     true
   }
 }
