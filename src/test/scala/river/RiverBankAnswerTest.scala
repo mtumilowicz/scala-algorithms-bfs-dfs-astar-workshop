@@ -10,13 +10,13 @@ class RiverBankAnswerTest extends AnyFeatureSpec with GivenWhenThen {
   Feature("solve the riddle") {
     Scenario("3 policemen, 3 thieves") {
       Given("left bank state")
-      val start = LeftRiverBankWorkshop(3, 3)
+      val start = LeftRiverBankAnswer(3, 3)
 
       When("solve")
-      val solution = BfsAnswer.run(start, RiverBankWorkshop.checkIfGoalAchieved, (x: RiverBankWorkshop) => x.successors())
+      val solution = BfsAnswer.run(start, RiverBankAnswer.checkIfGoalAchieved, (x: RiverBankAnswer) => x.successors())
 
       Then("is solvable")
-      solution.map(_.toPath).map(RiverBankWorkshop.show).orNull shouldBe list
+      solution.map(_.toPath).map(RiverBankAnswer.show).orNull shouldBe list
     }
   }
 
