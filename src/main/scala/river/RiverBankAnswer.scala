@@ -2,7 +2,7 @@ package river
 
 import scala.collection.mutable.ListBuffer
 
-sealed trait RiverBank {
+sealed trait RiverBankAnswer {
   val policemen: Int
   val thieves: Int
   val max = 3
@@ -12,10 +12,10 @@ sealed trait RiverBank {
 
   def show(): String
 
-  def toOppositeBank(p: Int, t: Int): RiverBank
+  def toOppositeBank(p: Int, t: Int): RiverBankAnswer
 
-  def successors(): List[RiverBank] = {
-    val next = ListBuffer[RiverBank]()
+  def successors(): List[RiverBankAnswer] = {
+    val next = ListBuffer[RiverBankAnswer]()
     if (policemen > 1) next += toOppositeBank(2, 0)
     if (policemen > 0) next += toOppositeBank(1, 0)
     if (thieves > 1) next += toOppositeBank(0, 2)
@@ -32,33 +32,33 @@ sealed trait RiverBank {
   }
 }
 
-object RiverBank {
+object RiverBankAnswer {
 
-  def show(path: List[RiverBank]): List[String] =
+  def show(path: List[RiverBankAnswer]): List[String] =
     path.map(_.show())
 
-  def checkIfGoalAchieved(bank: RiverBank): Boolean =
+  def checkIfGoalAchieved(bank: RiverBankAnswer): Boolean =
     bank match {
-      case LeftRiverBank(policemen, thieves) => policemen == 0 && thieves == 0
-      case RightRiverBank(policemen, thieves) => policemen == bank.max && thieves == bank.max
+      case LeftRiverBankAnswer(policemen, thieves) => policemen == 0 && thieves == 0
+      case RightRiverBankAnswer(policemen, thieves) => policemen == bank.max && thieves == bank.max
     }
 }
 
-case class LeftRiverBank(override val policemen: Int,
-                         override val thieves: Int) extends RiverBank {
+case class LeftRiverBankAnswer(override val policemen: Int,
+                               override val thieves: Int) extends RiverBankAnswer {
 
   override def show(): String =
     s"(${policemen}, ${thieves}) | (${oppositeBankPolicemen}, ${oppositeBankThieves}), boat = left}"
 
-  override def toOppositeBank(p: Int, t: Int): RiverBank =
-    RightRiverBank(oppositeBankPolicemen + p, oppositeBankThieves + t)
+  override def toOppositeBank(p: Int, t: Int): RiverBankAnswer =
+    RightRiverBankAnswer(oppositeBankPolicemen + p, oppositeBankThieves + t)
 }
 
-case class RightRiverBank(override val policemen: Int,
-                          override val thieves: Int) extends RiverBank {
+case class RightRiverBankAnswer(override val policemen: Int,
+                                override val thieves: Int) extends RiverBankAnswer {
   override def show(): String =
     s"(${oppositeBankPolicemen}, ${oppositeBankThieves}) | (${policemen}, ${thieves}), boat = right}"
 
-  override def toOppositeBank(p: Int, t: Int): RiverBank =
-    LeftRiverBank(oppositeBankPolicemen + p, oppositeBankThieves + t)
+  override def toOppositeBank(p: Int, t: Int): RiverBankAnswer =
+    LeftRiverBankAnswer(oppositeBankPolicemen + p, oppositeBankThieves + t)
 }
