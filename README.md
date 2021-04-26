@@ -39,7 +39,7 @@ case class Node[T](state: T, parent: Option[Node[T]] = Option.empty)
 * just take dfs and use queue instead of stack
 * always finds the shortest solution path where one exists
     * why?
-        * find path from Cracow to Warsaw with fewest stops (by train)
+        * try to find path from Cracow to Warsaw with fewest stops (by train)
         * dfs: keep going in the same direction and backtrack when a dead end
             * route could go through Poznan
         * bfs: check all of the stations one stop away from Cracow
@@ -49,7 +49,12 @@ case class Node[T](state: T, parent: Option[Node[T]] = Option.empty)
 
 ## astar
 * one important aspect of A* is `f = g + h`
-    * are in our Node class and get calculated every time we create a new node
+    * G - distance between the current node and the start node
+    * H - heuristic (estimated distance from the current node to the end node)
+    * F - total cost of the node
+        * we can look at all our nodes and ask: "is this the best node I can pick to move
+        forward?"
+    * and slightly modified Node class
         ```
         case class AStarNode[T](
                                  state: T,
@@ -58,14 +63,9 @@ case class Node[T](state: T, parent: Option[Node[T]] = Option.empty)
                                  heuristic: Double = 0.0
                                )
         ```
-    * F - total cost of the node
-        * we can look at all our nodes and say: "Hey, is this the best node I can pick to move
-        forward with right now?"
-    * G - distance between the current node and the start node
-    * H - heuristic (estimated distance from the current node to the end node)
 * code
     ```
-    val frontier = priorityQueue // by heuristics + cost
+    val frontier = priorityQueue // by total cost
     frontier enqueue initial
     val explored = map // state, cost
     explored put (initial, 0.0)
@@ -83,7 +83,7 @@ case class Node[T](state: T, parent: Option[Node[T]] = Option.empty)
     None
     ```
     * `explored(child) > newCost`
-        * check if this path to that square is better, using G cost as the measure
+        * check if path to that square is better, using G cost as the measure
         * a lower G cost means that this is a better path
 
 ## practice
@@ -118,3 +118,10 @@ case class Node[T](state: T, parent: Option[Node[T]] = Option.empty)
         "X,X,X,X,*,*,*, , , "
         "X,X,X,X,X,X,G, , , "
         ```
+* task 2
+    * three policemen and three thieves are on the west bank of a river
+    * they all must cross to the opposite bank of the river
+    * they have a riverboat that can hold two people
+    * there may never be more thieves than policemen
+    * riverboat must have at least one person on board to cross the river
+    * return the sequence of crossings
